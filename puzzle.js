@@ -1,7 +1,7 @@
 class Square {
-  constructor(number, presentFromStart) {
+  constructor(number) {
     this.number = number;
-    this.presentFromStart = presentFromStart;
+    this.presentFromStart = number === 0;
   }
 }
 
@@ -32,15 +32,10 @@ class Puzzle {
     const puzzleRow = Array.from(this.cols);
 
     for (const number of row) {
-      puzzleRow.push(this.makeSquare(number));
+      puzzleRow.push(new Square(number));
     }
 
     return puzzleRow;
-  }
-
-  makeSquare(number) {
-    const presentFromStart = number === 0;
-    return new Square(number, presentFromStart);
   }
 }
 
