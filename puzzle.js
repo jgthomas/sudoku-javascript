@@ -111,7 +111,6 @@ class Puzzle {
   notInRow(row, num) {
     for (const square of this.puzzle[row]) {
       if (square.number === num) {
-        console.log("here");
         return false;
       }
     }
