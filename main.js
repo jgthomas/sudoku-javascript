@@ -16,5 +16,6 @@ const samplePuzzle = [
 ];
 
 const puzzle = new Puzzle(samplePuzzleSize, samplePuzzle);
+puzzle.solve();
 const puzzlePrinter = new PuzzlePrinter(puzzle);
 puzzlePrinter.print();
