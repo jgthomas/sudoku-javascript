@@ -67,12 +67,12 @@ class Puzzle {
                     puzzleString += ` ${number} `;
                 }
 
-                if ((col + 1) % this.colsPerBox === 0) {
+                if (this.reachedLastCol(col)) {
                     puzzleString += "|";
                 }
             }
 
-            if ((row+1) % this.rowsPerBox === 0) {
+            if (this.reachedLastRow(row)) {
                 puzzleString += this.dividerString();
             } else {
                 puzzleString += "\n";
@@ -94,6 +94,14 @@ class Puzzle {
         divider += "----\n";
 
         return divider;
+    }
+
+    reachedLastCol(col) {
+        return (col + 1) % this.colsPerBox === 0;
+    }
+
+    reachedLastRow(row) {
+        return (row + 1) % this.rowsPerBox === 0;
     }
 }
 
