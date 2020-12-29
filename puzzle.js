@@ -53,7 +53,7 @@ class Puzzle {
     }
 
     puzzleToString() {
-        let puzzleString = this.printDivider();
+        let puzzleString = this.dividerString();
 
         for (let row = 0; row < this.rows; row++) {
             puzzleString += "|";
@@ -73,7 +73,7 @@ class Puzzle {
             }
 
             if ((row+1) % this.rowsPerBox === 0) {
-                puzzleString += this.printDivider();
+                puzzleString += this.dividerString();
             } else {
                 puzzleString += "\n";
             }
@@ -84,7 +84,7 @@ class Puzzle {
         return puzzleString;
     }
 
-    printDivider() {
+    dividerString() {
         let divider = "\n";
 
         for (let row = 0; row < this.rows; row++) {
