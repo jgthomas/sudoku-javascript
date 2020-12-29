@@ -19,15 +19,23 @@ class Puzzle {
   }
 
   makePuzzle(puzzle) {
-    const puzzleGrid = Array.from(Array(this.rows), () => new Array(this.cols));
+    const puzzleGrid = Array.from(this.rows);
 
-    for (let row = 0; row < this.rows; row++) {
-      for (let col = 0; col < this.cols; col++) {
-        puzzleGrid[row][col] = this.makeSquare(puzzle[row][col]);
-      }
+    for (const row of puzzle) {
+      puzzleGrid.push(this.makePuzzleRow(row));
     }
 
     return puzzleGrid;
+  }
+
+  makePuzzleRow(row) {
+    const puzzleRow = Array.from(this.cols);
+
+    for (const number of row) {
+      puzzleRow.push(this.makeSquare(number));
+    }
+
+    return puzzleRow;
   }
 
   makeSquare(number) {
