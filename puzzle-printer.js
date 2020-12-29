@@ -40,15 +40,7 @@ class PuzzlePrinter {
   }
 
   dividerString() {
-    let divider = "\n";
-
-    for (let row = 0; row < this.puzzle.rows; row++) {
-      divider += "---";
-    }
-
-    divider += "----\n";
-
-    return divider;
+    return `\n${"---".repeat(this.puzzle.rows)}----\n`;
   }
 
   reachedLastCol(col) {
