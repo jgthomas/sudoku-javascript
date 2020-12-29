@@ -49,6 +49,10 @@ class Puzzle {
     }
 
     printPuzzle() {
+        console.log(this.puzzleToString());
+    }
+
+    puzzleToString() {
         let puzzleString = this.printDivider();
 
         for (let row = 0; row < this.rows; row++) {
@@ -77,7 +81,7 @@ class Puzzle {
 
         puzzleString += "\n";
 
-        console.log(puzzleString);
+        return puzzleString;
     }
 
     printDivider() {
