@@ -109,12 +109,19 @@ class Puzzle {
   }
 
   notInRow(row, num) {
-    return !this.puzzle[row].includes(num);
+    for (const square of this.puzzle[row]) {
+      if (square.number === num) {
+        console.log("here");
+        return false;
+      }
+    }
+
+    return true;
   }
 
   notInCol(col, num) {
-    for (const row in this.puzzle) {
-      if (row[col] === num) {
+    for (const row of this.puzzle) {
+      if (row[col].number === num) {
         return false;
       }
     }
@@ -130,7 +137,7 @@ class Puzzle {
 
     for (let row = rowMin; row < rowMax; row++) {
       for (let col = colMin; col < colMax; col++) {
-        if (this.puzzle[row][col] === num) {
+        if (this.puzzle[row][col].number === num) {
           return false;
         }
       }
