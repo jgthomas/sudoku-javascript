@@ -41,33 +41,33 @@ class Puzzle {
   solve() {
     let row = 0;
     let col = 0;
-    let movingForward = true;
+    let backtracking = false;
     let gridPosition = row * this.rows + col;
 
     while (gridPosition < this.totalSquares) {
       let currentSquare = this.puzzle[row][col];
 
       if (currentSquare.presentFromStart) {
-        if (movingForward) {
-          col = this.nextColumn(col);
-          row = this.rowForward(col, row);
+        if (backtracking) {
+          col = this.previousColumn(col);
+          row = this.rowBack(col, row);
         }
 
-        col = this.previousColumn(col);
-        row = this.rowBack(col, row);
-      }
-
-      let number = this.validNumberForPosition(row, col);
-      this.puzzle[row][col].number = number;
-
-      if (this.validNumberFound(number)) {
         col = this.nextColumn(col);
         row = this.rowForward(col, row);
-        movingForward = true;
-      } else {
+      }
+
+      let number = this.numberForPosition(row, col);
+      backtracking = this.noValidNumberFound(number);
+
+      this.puzzle[row][col].number = number;
+
+      if (backtracking) {
         col = this.previousColumn(col);
         row = this.rowBack(col, row);
-        movingForward = false;
+      } else {
+        col = this.nextColumn(col);
+        row = this.rowForward(col, row);
       }
 
       if (this.backtrackedPastStartOfPuzzle(row, col)) {
@@ -78,8 +78,8 @@ class Puzzle {
     }
   }
 
-  validNumberFound(number) {
-    return number > 0;
+  noValidNumberFound(number) {
+    return number === 0;
   }
 
   nextColumn(col) {
@@ -108,7 +108,7 @@ class Puzzle {
     return col < 0 && row === 0;
   }
 
-  validNumberForPosition(row, col) {
+  numberForPosition(row, col) {
     const currentNumber = this.puzzle[row][col].number;
     const firstTry = currentNumber === 0 ? 1 : currentNumber;
 
