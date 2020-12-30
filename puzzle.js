@@ -138,8 +138,16 @@ class Puzzle {
   }
 
   notInBox(currentSquare, num) {
-    for (let row = currentSquare.rowMin; row < currentSquare.rowMax; row++) {
-      for (let col = currentSquare.colMin; col < currentSquare.colMax; col++) {
+    for (
+      let row = currentSquare.boxMinRow;
+      row < currentSquare.boxMaxRow;
+      row++
+    ) {
+      for (
+        let col = currentSquare.boxMinCol;
+        col < currentSquare.boxMaxCol;
+        col++
+      ) {
         if (this.puzzle[row][col].number === num) {
           return false;
         }
@@ -163,10 +171,10 @@ class Square {
     this.boxDimension = boxDimension;
     this.boxCount = boxDimension;
     this.size = this.boxDimension * this.boxCount;
-    this.rowMin = this.minRow();
-    this.colMin = this.minCol();
-    this.rowMax = this.maxRow();
-    this.colMax = this.maxCol();
+    this.boxMinRow = this.minRow();
+    this.boxMinCol = this.minCol();
+    this.boxMaxRow = this.maxRow();
+    this.boxMaxCol = this.maxCol();
   }
 
   minRow() {
