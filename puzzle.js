@@ -75,8 +75,8 @@ class Puzzle {
   }
 
   backtrackPosition(row, col) {
-    const newCol = this.previousColumn(col);
-    const newRow = this.rowBack(newCol, row);
+    const newCol = col === 0 ? this.cols - 1 : col - 1;
+    const newRow = newCol === this.cols - 1 ? row - 1 : row;
     return [newCol, newRow];
   }
 
@@ -88,28 +88,6 @@ class Puzzle {
 
   noValidNumberFound(number) {
     return number === 0;
-  }
-
-  nextColumn(col) {
-    return col === this.cols - 1 ? 0 : col + 1;
-  }
-
-  previousColumn(col) {
-    return col === 0 ? this.cols - 1 : col - 1;
-  }
-
-  /**
-   * if moved to first col increment row, else same row
-   */
-  rowForward(col, row) {
-    return col === 0 ? row + 1 : row;
-  }
-
-  /**
-   * if moved back to last col decrement row, else same row
-   */
-  rowBack(col, row) {
-    return col === this.cols - 1 ? row - 1 : row;
   }
 
   backtrackedPastStartOfPuzzle(row, col) {
