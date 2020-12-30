@@ -17,6 +17,5 @@ const samplePuzzle = [
 
 const puzzle = new Puzzle(samplePuzzleSize, samplePuzzle);
 puzzle.solve();
-console.log(puzzle.toArray());
 const puzzlePrinter = new PuzzlePrinter(puzzle);
 puzzlePrinter.print();

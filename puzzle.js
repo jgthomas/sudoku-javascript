@@ -79,11 +79,7 @@ class Puzzle {
 
   fillSquare(row, col) {
     const currentNumber = this.puzzle[row][col].number;
-    let firstTry = currentNumber;
-
-    if (currentNumber === 0) {
-      firstTry = 1;
-    }
+    const firstTry = currentNumber === 0 ? 1 : currentNumber;
 
     for (let num = firstTry; num <= this.maxNumber; num++) {
       if (this.numberAllowed(row, col, num)) {
