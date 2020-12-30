@@ -51,20 +51,20 @@ class Puzzle {
         }
 
         [row, col] = this.forwardPosition(row, col);
-      }
-
-      currentSquare = this.puzzle[row][col];
-      currentSquare.number = this.numberForPosition(currentSquare);
-      backtracking = this.noValidNumberFound(currentSquare.number);
-
-      if (backtracking) {
-        [row, col] = this.backtrackPosition(row, col);
       } else {
-        [row, col] = this.forwardPosition(row, col);
-      }
+        currentSquare = this.puzzle[row][col];
+        currentSquare.number = this.numberForPosition(currentSquare);
+        backtracking = this.noValidNumberFound(currentSquare.number);
 
-      if (this.backtrackedPastStartOfPuzzle(row, col)) {
-        throw new Error("Puzzle cannot be solved!");
+        if (backtracking) {
+          [row, col] = this.backtrackPosition(row, col);
+        } else {
+          [row, col] = this.forwardPosition(row, col);
+        }
+
+        if (this.backtrackedPastStartOfPuzzle(row, col)) {
+          throw new Error("Puzzle cannot be solved!");
+        }
       }
 
       gridPosition = row * this.rows + col;
