@@ -44,11 +44,11 @@ class PuzzlePrinter {
   }
 
   reachedLastCol(col) {
-    return (col + 1) % this.puzzle.colsPerBox === 0;
+    return (col + 1) % this.puzzle.boxDimension === 0;
   }
 
   reachedLastRow(row) {
-    return (row + 1) % this.puzzle.rowsPerBox === 0;
+    return (row + 1) % this.puzzle.boxDimension === 0;
   }
 }
 

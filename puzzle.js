@@ -4,8 +4,6 @@ class Puzzle {
     this.cols = size;
     this.boxesAcross = Math.sqrt(size);
     this.boxesDown = Math.sqrt(size);
-    this.rowsPerBox = Math.sqrt(size);
-    this.colsPerBox = Math.sqrt(size);
     this.boxDimension = Math.sqrt(size);
     this.totalSquares = Math.pow(size, 2);
     this.maxNumber = size;
