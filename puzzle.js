@@ -55,10 +55,11 @@ class Puzzle {
         [row, col] = this.forwardPosition(row, col);
       }
 
-      let number = this.numberForPosition(row, col);
-      backtracking = this.noValidNumberFound(number);
+      currentSquare = this.puzzle[row][col];
+      currentSquare.number = this.numberForPosition(currentSquare);
+      backtracking = this.noValidNumberFound(currentSquare.number);
 
-      this.puzzle[row][col].number = number;
+      //this.puzzle[row][col] = currentSquare;
 
       if (backtracking) {
         [row, col] = this.backtrackPosition(row, col);
@@ -94,12 +95,12 @@ class Puzzle {
     return col < 0 && row === 0;
   }
 
-  numberForPosition(row, col) {
-    const currentNumber = this.puzzle[row][col].number;
-    const firstTry = currentNumber === 0 ? 1 : currentNumber;
+  numberForPosition(currentSquare) {
+    //const currentNumber = this.puzzle[row][col].number;
+    const currentNumber = currentSquare.number === 0 ? 1 : currentSquare.number;
 
-    for (let num = firstTry; num <= this.maxNumber; num++) {
-      if (this.numberAllowed(row, col, num)) {
+    for (let num = currentNumber; num <= this.maxNumber; num++) {
+      if (this.numberAllowed(currentSquare, num)) {
         return num;
       }
     }
@@ -107,11 +108,11 @@ class Puzzle {
     return 0;
   }
 
-  numberAllowed(row, col, num) {
+  numberAllowed(currentSquare, num) {
     if (
-      this.notInRow(row, num) &&
-      this.notInCol(col, num) &&
-      this.notInBox(row, col, num)
+      this.notInRow(currentSquare, num) &&
+      this.notInCol(currentSquare, num) &&
+      this.notInBox(currentSquare, num)
     ) {
       return true;
     }
@@ -119,8 +120,8 @@ class Puzzle {
     return false;
   }
 
-  notInRow(row, num) {
-    for (const square of this.puzzle[row]) {
+  notInRow(currentSquare, num) {
+    for (const square of this.puzzle[currentSquare.row]) {
       if (square.number === num) {
         return false;
       }
@@ -129,9 +130,9 @@ class Puzzle {
     return true;
   }
 
-  notInCol(col, num) {
+  notInCol(currentSquare, num) {
     for (const row of this.puzzle) {
-      if (row[col].number === num) {
+      if (row[currentSquare.col].number === num) {
         return false;
       }
     }
@@ -139,11 +140,11 @@ class Puzzle {
     return true;
   }
 
-  notInBox(rowCurrent, colCurrent, num) {
-    const rowMin = this.minRow(rowCurrent);
-    const rowMax = this.maxRow(rowMin);
-    const colMin = this.minCol(colCurrent);
-    const colMax = this.maxCol(colMin);
+  notInBox(currentSquare, num) {
+    const rowMin = currentSquare.rowMin;
+    const rowMax = currentSquare.rowMax;
+    const colMin = currentSquare.colMin;
+    const colMax = currentSquare.colMax;
 
     for (let row = rowMin; row < rowMax; row++) {
       for (let col = colMin; col < colMax; col++) {
@@ -156,7 +157,7 @@ class Puzzle {
     return true;
   }
 
-  minRow(row) {
+  /*minRow(row) {
     let minRow = 0;
 
     if (row >= 2 * this.rowsPerBox) {
@@ -186,7 +187,7 @@ class Puzzle {
 
   maxCol(minCol) {
     return minCol + this.cols / this.boxesAcross;
-  }
+  }*/
 
   toIntArray() {
     return this.puzzle.map((row) => row.map((square) => square.number));
@@ -204,6 +205,8 @@ class Square {
     this.size = this.boxDimension * this.boxCount;
     this.rowMin = this.minRow();
     this.colMin = this.minCol();
+    this.rowMax = this.maxRow();
+    this.colMax = this.maxCol();
   }
 
   minRow() {
@@ -234,7 +237,7 @@ class Square {
     return this.rowMin + this.size / this.boxCount;
   }
 
-  maxCol(minCol) {
+  maxCol() {
     return this.colMin + this.size / this.boxCount;
   }
 }
