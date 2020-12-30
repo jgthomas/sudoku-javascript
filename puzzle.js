@@ -42,9 +42,9 @@ class Puzzle {
     let row = 0;
     let col = 0;
     let movingForward = true;
-    let currentSquareNum = row * this.rows + col;
+    let gridPosition = row * this.rows + col;
 
-    while (currentSquareNum < this.totalSquares) {
+    while (gridPosition < this.totalSquares) {
       let currentSquare = this.puzzle[row][col];
 
       if (currentSquare.presentFromStart) {
@@ -74,7 +74,7 @@ class Puzzle {
         throw new Error("Puzzle cannot be solved!");
       }
 
-      currentSquareNum = row * this.rows + col;
+      gridPosition = row * this.rows + col;
     }
   }
 
