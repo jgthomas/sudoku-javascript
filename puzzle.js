@@ -66,7 +66,7 @@ class Puzzle {
         col = 0;
       } else if (col < 0) {
         if (row === 0) {
-          return;
+          throw new Error("Puzzle cannot be solved!");
         } else {
           row--;
           col = this.cols - 1;
@@ -173,7 +173,7 @@ class Puzzle {
     return minCol + this.cols / this.boxesAcross;
   }
 
-  toArray() {
+  toIntArray() {
     return this.puzzle.map((row) => row.map((square) => square.number));
   }
 }
