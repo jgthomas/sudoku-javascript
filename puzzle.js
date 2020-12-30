@@ -202,11 +202,11 @@ class Square {
   }
 
   maxRow() {
-    return this.rowMin + this.size / this.boxCount;
+    return this.boxMinRow + this.size / this.boxCount;
   }
 
   maxCol() {
-    return this.colMin + this.size / this.boxCount;
+    return this.boxMinCol + this.size / this.boxCount;
   }
 }
 
