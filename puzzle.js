@@ -51,13 +51,16 @@ class Puzzle {
         if (movingForward) {
           col = this.nextColumn(col);
           row = this.rowForward(col, row);
-        } else {
-          col = this.previousColumn(col);
-          row = this.rowBack(col, row);
         }
+
+        col = this.previousColumn(col);
+        row = this.rowBack(col, row);
       }
 
-      if (this.fillSquare(row, col)) {
+      let number = this.validNumberForPosition(row, col);
+      this.puzzle[row][col].number = number;
+
+      if (this.validNumberFound(number)) {
         col = this.nextColumn(col);
         row = this.rowForward(col, row);
         movingForward = true;
@@ -73,6 +76,10 @@ class Puzzle {
 
       currentSquareNum = row * this.rows + col;
     }
+  }
+
+  validNumberFound(number) {
+    return number > 0;
   }
 
   nextColumn(col) {
@@ -101,19 +108,17 @@ class Puzzle {
     return col < 0 && row === 0;
   }
 
-  fillSquare(row, col) {
+  validNumberForPosition(row, col) {
     const currentNumber = this.puzzle[row][col].number;
     const firstTry = currentNumber === 0 ? 1 : currentNumber;
 
     for (let num = firstTry; num <= this.maxNumber; num++) {
       if (this.numberAllowed(row, col, num)) {
-        this.puzzle[row][col].number = num;
-        return true;
+        return num;
       }
     }
 
-    this.puzzle[row][col].number = 0;
-    return false;
+    return 0;
   }
 
   numberAllowed(row, col, num) {
