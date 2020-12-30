@@ -176,6 +176,10 @@ class Puzzle {
   maxCol(minCol) {
     return minCol + this.cols / this.boxesAcross;
   }
+
+  toArray() {
+    return this.puzzle.map((row) => row.map((square) => square.number));
+  }
 }
 
 module.exports = Puzzle;
