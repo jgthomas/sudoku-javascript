@@ -59,8 +59,6 @@ class Puzzle {
       currentSquare.number = this.numberForPosition(currentSquare);
       backtracking = this.noValidNumberFound(currentSquare.number);
 
-      //this.puzzle[row][col] = currentSquare;
-
       if (backtracking) {
         [row, col] = this.backtrackPosition(row, col);
       } else {
@@ -96,7 +94,6 @@ class Puzzle {
   }
 
   numberForPosition(currentSquare) {
-    //const currentNumber = this.puzzle[row][col].number;
     const currentNumber = currentSquare.number === 0 ? 1 : currentSquare.number;
 
     for (let num = currentNumber; num <= this.maxNumber; num++) {
@@ -156,38 +153,6 @@ class Puzzle {
 
     return true;
   }
-
-  /*minRow(row) {
-    let minRow = 0;
-
-    if (row >= 2 * this.rowsPerBox) {
-      minRow = 2 * this.rowsPerBox;
-    } else if (row >= this.rowsPerBox) {
-      minRow = this.rowsPerBox;
-    }
-
-    return minRow;
-  }
-
-  minCol(col) {
-    let minCol = 0;
-
-    if (col >= 2 * this.colsPerBox) {
-      minCol = 2 * this.colPerBox;
-    } else if (col >= this.colsPerBox) {
-      minCol = this.colsPerBox;
-    }
-
-    return minCol;
-  }
-
-  maxRow(minRow) {
-    return minRow + this.rows / this.boxesDown;
-  }
-
-  maxCol(minCol) {
-    return minCol + this.cols / this.boxesAcross;
-  }*/
 
   toIntArray() {
     return this.puzzle.map((row) => row.map((square) => square.number));
