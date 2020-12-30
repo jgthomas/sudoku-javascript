@@ -1,7 +1,10 @@
 class Square {
-  constructor(number) {
+  constructor(number, row, col, boxDimension) {
     this.number = number;
     this.presentFromStart = number !== 0;
+    this.row = row;
+    this.col = col;
+    this.boxDimension = boxDimension;
   }
 }
 
@@ -13,6 +16,7 @@ class Puzzle {
     this.boxesDown = Math.sqrt(size);
     this.rowsPerBox = Math.sqrt(size);
     this.colsPerBox = Math.sqrt(size);
+    this.boxDimension = Math.sqrt(size);
     this.totalSquares = Math.pow(size, 2);
     this.maxNumber = size;
     this.puzzle = this.makePuzzle(puzzle);
@@ -21,18 +25,24 @@ class Puzzle {
   makePuzzle(puzzle) {
     const puzzleGrid = Array.from(this.rows);
 
+    let rowNum = 0;
+
     for (const row of puzzle) {
-      puzzleGrid.push(this.makePuzzleRow(row));
+      puzzleGrid.push(this.makePuzzleRow(row, rowNum));
+      rowNum++;
     }
 
     return puzzleGrid;
   }
 
-  makePuzzleRow(row) {
+  makePuzzleRow(row, rowNum) {
     const puzzleRow = Array.from(this.cols);
 
+    let colNum = 0;
+
     for (const number of row) {
-      puzzleRow.push(new Square(number));
+      puzzleRow.push(new Square(number, rowNum, colNum, this.boxDimension));
+      colNum++;
     }
 
     return puzzleRow;
