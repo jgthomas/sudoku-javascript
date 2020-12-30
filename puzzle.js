@@ -138,13 +138,8 @@ class Puzzle {
   }
 
   notInBox(currentSquare, num) {
-    const rowMin = currentSquare.rowMin;
-    const rowMax = currentSquare.rowMax;
-    const colMin = currentSquare.colMin;
-    const colMax = currentSquare.colMax;
-
-    for (let row = rowMin; row < rowMax; row++) {
-      for (let col = colMin; col < colMax; col++) {
+    for (let row = currentSquare.rowMin; row < currentSquare.rowMax; row++) {
+      for (let col = currentSquare.colMin; col < currentSquare.colMax; col++) {
         if (this.puzzle[row][col].number === num) {
           return false;
         }
