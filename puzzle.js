@@ -61,20 +61,30 @@ class Puzzle {
         movingForward = false;
       }
 
-      if (col >= this.cols) {
+      if (this.reachedEndOfRow(col)) {
         row++;
         col = 0;
-      } else if (col < 0) {
-        if (row === 0) {
-          throw new Error("Puzzle cannot be solved!");
-        } else {
-          row--;
-          col = this.cols - 1;
-        }
+      } else if (this.backtrackedPastStartOfPuzzle(row, col)) {
+        throw new Error("Puzzle cannot be solved!");
+      } else if (this.backtrackedToStartOfRow(col)) {
+        row--;
+        col = this.cols - 1;
       }
 
       currentSquareNum = row * this.rows + col;
     }
+  }
+
+  reachedEndOfRow(col) {
+    return col >= this.cols;
+  }
+
+  backtrackedToStartOfRow(col) {
+    return col < 0;
+  }
+
+  backtrackedPastStartOfPuzzle(row, col) {
+    return this.backtrackedToStartOfRow(col) && row === 0;
   }
 
   fillSquare(row, col) {
