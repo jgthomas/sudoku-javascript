@@ -1,13 +1,3 @@
-class Square {
-  constructor(number, row, col, boxDimension) {
-    this.number = number;
-    this.presentFromStart = number !== 0;
-    this.row = row;
-    this.col = col;
-    this.boxDimension = boxDimension;
-  }
-}
-
 class Puzzle {
   constructor(size, puzzle) {
     this.rows = size;
@@ -200,6 +190,52 @@ class Puzzle {
 
   toIntArray() {
     return this.puzzle.map((row) => row.map((square) => square.number));
+  }
+}
+
+class Square {
+  constructor(number, row, col, boxDimension) {
+    this.number = number;
+    this.presentFromStart = number !== 0;
+    this.row = row;
+    this.col = col;
+    this.boxDimension = boxDimension;
+    this.boxCount = boxDimension;
+    this.size = this.boxDimension * this.boxCount;
+    this.rowMin = this.minRow();
+    this.colMin = this.minCol();
+  }
+
+  minRow() {
+    let minRow = 0;
+
+    if (this.row >= 2 * this.boxDimension) {
+      minRow = 2 * this.boxDimension;
+    } else if (this.row >= this.boxDimension) {
+      minRow = this.boxDimension;
+    }
+
+    return minRow;
+  }
+
+  minCol() {
+    let minCol = 0;
+
+    if (this.col >= 2 * this.boxDimension) {
+      minCol = 2 * this.boxDimension;
+    } else if (this.col >= this.boxDimension) {
+      minCol = this.boxDimension;
+    }
+
+    return minCol;
+  }
+
+  maxRow() {
+    return this.rowMin + this.size / this.boxCount;
+  }
+
+  maxCol(minCol) {
+    return this.colMin + this.size / this.boxCount;
   }
 }
 
