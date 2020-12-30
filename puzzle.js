@@ -49,10 +49,10 @@ class Puzzle {
 
       if (currentSquare.presentFromStart) {
         if (backtracking) {
-          [col, row] = this.backtrackPosition(row, col);
+          [row, col] = this.backtrackPosition(row, col);
         }
 
-        [col, row] = this.forwardPosition(row, col);
+        [row, col] = this.forwardPosition(row, col);
       }
 
       let number = this.numberForPosition(row, col);
@@ -61,9 +61,9 @@ class Puzzle {
       this.puzzle[row][col].number = number;
 
       if (backtracking) {
-        [col, row] = this.backtrackPosition(row, col);
+        [row, col] = this.backtrackPosition(row, col);
       } else {
-        [col, row] = this.forwardPosition(row, col);
+        [row, col] = this.forwardPosition(row, col);
       }
 
       if (this.backtrackedPastStartOfPuzzle(row, col)) {
@@ -77,13 +77,13 @@ class Puzzle {
   backtrackPosition(row, col) {
     const newCol = col === 0 ? this.cols - 1 : col - 1;
     const newRow = newCol === this.cols - 1 ? row - 1 : row;
-    return [newCol, newRow];
+    return [newRow, newCol];
   }
 
   forwardPosition(row, col) {
     const newCol = col === this.cols - 1 ? 0 : col + 1;
     const newRow = newCol === 0 ? row + 1 : row;
-    return [newCol, newRow];
+    return [newRow, newCol];
   }
 
   noValidNumberFound(number) {
