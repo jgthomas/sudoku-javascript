@@ -49,42 +49,56 @@ class Puzzle {
 
       if (currentSquare.presentFromStart) {
         if (movingForward) {
-          col++;
+          col = this.nextColumn(col);
+          row = this.rowForward(col, row);
         } else {
-          col--;
+          col = this.previousColumn(col);
+          row = this.rowBack(col, row);
         }
-      } else if (this.fillSquare(row, col)) {
-        col++;
+      }
+
+      if (this.fillSquare(row, col)) {
+        col = this.nextColumn(col);
+        row = this.rowForward(col, row);
         movingForward = true;
       } else {
-        col--;
+        col = this.previousColumn(col);
+        row = this.rowBack(col, row);
         movingForward = false;
       }
 
-      if (this.reachedEndOfRow(col)) {
-        row++;
-        col = 0;
-      } else if (this.backtrackedPastStartOfPuzzle(row, col)) {
+      if (this.backtrackedPastStartOfPuzzle(row, col)) {
         throw new Error("Puzzle cannot be solved!");
-      } else if (this.backtrackedToStartOfRow(col)) {
-        row--;
-        col = this.cols - 1;
       }
 
       currentSquareNum = row * this.rows + col;
     }
   }
 
-  reachedEndOfRow(col) {
-    return col >= this.cols;
+  nextColumn(col) {
+    return col === this.cols - 1 ? 0 : col + 1;
   }
 
-  backtrackedToStartOfRow(col) {
-    return col < 0;
+  previousColumn(col) {
+    return col === 0 ? this.cols - 1 : col - 1;
+  }
+
+  /**
+   * if moved to first col increment row, else same row
+   */
+  rowForward(col, row) {
+    return col === 0 ? row + 1 : row;
+  }
+
+  /**
+   * if moved back to last col decrement row, else same row
+   */
+  rowBack(col, row) {
+    return col === this.cols - 1 ? row - 1 : row;
   }
 
   backtrackedPastStartOfPuzzle(row, col) {
-    return this.backtrackedToStartOfRow(col) && row === 0;
+    return col < 0 && row === 0;
   }
 
   fillSquare(row, col) {
